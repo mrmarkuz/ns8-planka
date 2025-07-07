@@ -1,0 +1,30 @@
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+[Unit]
+Description=Podman  planka-app.service
+BindsTo=planka.service
+After=planka.service postgres-app.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+EnvironmentFile=-%S/state/smarthost.env
+WorkingDirectory=%S/state
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/bin/mkdir -p tmp
+ExecStartPre=/bin/rm -f %t/planka-app.pid %t/planka-app.ctr-id
+ExecStartPre=-runagent discover-smarthost
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/planka-app.pid  --cidfile %t/planka-app.ctr-id --cgroups=no-conmon  --pod-id-file %t/planka.pod-id --replace -d --name  planka-app  --volume favicons:/app/public/favicons --volume user-avatars:/app/public/user-avatars --volume background-images:/app/public/background-images --volume attachments:/app/private/attachments   --env planka.env  ${PLANKA_IMAGE}  
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/planka-app.ctr-id -t 10
+ExecReload=/usr/bin/podman kill -s HUP planka-app
+SyslogIdentifier=%u
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/planka-app.ctr-id
+PIDFile=%t/planka-app.pid
+Type=forking
+
+[Install]
+WantedBy=default.target
