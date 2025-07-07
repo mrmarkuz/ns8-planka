@@ -25,3 +25,11 @@ planka = {
  "DATABASE_URL" : DATABASE_URL ,
 } 
 agent.write_envfile("planka.env", planka) 
+POSTGRES_DB = data.get("POSTGRES_DB", "planka") 
+POSTGRES_HOST_AUTH_METHOD = data.get("POSTGRES_HOST_AUTH_METHOD", "trust") 
+ 
+postgres = { 
+ "POSTGRES_DB" : POSTGRES_DB ,
+ "POSTGRES_HOST_AUTH_METHOD" : POSTGRES_HOST_AUTH_METHOD ,
+} 
+agent.write_envfile("postgres.env", postgres) 
