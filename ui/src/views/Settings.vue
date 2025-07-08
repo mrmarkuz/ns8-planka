@@ -33,6 +33,39 @@
               ref="host"
             >
             </cv-text-input>
+
+            <cv-text-input
+              :label="$t('settings.admin_username')"
+              placeholder="admin"
+              v-model.trim="username"
+              class="mg-bottom"
+              :invalid-message="$t(error.username)"
+              :disabled="
+                loading.getConfiguration ||
+                loading.configureModule ||
+                already_set
+              "
+              ref="username"
+            >
+            </cv-text-input>
+            <cv-text-input
+              :label="$t('settings.admin_password')"
+              v-model.trim="password"
+              type="password"
+              :password-show-label="$t('settings.show_password')"
+              :password-hide-label="$t('settings.hide_password')"
+              class="mg-bottom"
+              :invalid-message="$t(error.password)"
+              :disabled="
+                loading.getConfiguration ||
+                loading.configureModule ||
+                already_set
+              "
+              ref="password"
+              >
+            </cv-text-input>
+
+
             <cv-toggle
               value="letsEncrypt"
               :label="$t('settings.lets_encrypt')"
@@ -123,6 +156,8 @@ export default {
       },
       urlCheckInterval: null,
       host: "",
+      username: "",
+      password: "",
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
       loading: {
@@ -133,6 +168,8 @@ export default {
         getConfiguration: "",
         configureModule: "",
         host: "",
+        username: "",
+        password: "",
         lets_encrypt: "",
         http2https: "",
       },
@@ -200,6 +237,8 @@ export default {
     getConfigurationCompleted(taskContext, taskResult) {
       const config = taskResult.output;
       this.host = config.host;
+      this.username = config.username;
+      this.password = config.password;
       this.isLetsEncryptEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
 
@@ -215,6 +254,22 @@ export default {
 
         if (isValidationOk) {
           this.focusElement("host");
+        }
+        isValidationOk = false;
+      }
+      if (!this.username) {
+        this.error.username = "common.required";
+
+        if (isValidationOk) {
+          this.focusElement("username");
+        }
+        isValidationOk = false;
+      }
+      if (!this.password) {
+        this.error.password = "common.required";
+
+        if (isValidationOk) {
+          this.focusElement("password");
         }
         isValidationOk = false;
       }
@@ -269,6 +324,8 @@ export default {
           action: taskAction,
           data: {
             host: this.host,
+            username: this.username,
+            password: this.password,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
           },

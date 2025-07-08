@@ -17,9 +17,9 @@ data = json.load(sys.stdin)
 #agent.dump_env()
 DATABASE_URL = data.get("DATABASE_URL", "postgresql://postgres@postgres-app/planka")
 DEFAULT_ADMIN_EMAIL = data.get("DEFAULT_ADMIN_EMAIL", "admin@local")
-DEFAULT_ADMIN_PASSWORD = data.get("DEFAULT_ADMIN_PASSWORD", "Nethesis,1234")
+DEFAULT_ADMIN_PASSWORD = data.get("password", "")
 DEFAULT_ADMIN_NAME = data.get("DEFAULT_ADMIN_NAME", "Planka Admin")
-DEFAULT_ADMIN_USERNAME = data.get("DEFAULT_ADMIN_USERNAME", "admin")
+DEFAULT_ADMIN_USERNAME = data.get("username", "")
 TRUST_PROXY = data.get("TRUST_PROXY", "true")
 
 planka = {
