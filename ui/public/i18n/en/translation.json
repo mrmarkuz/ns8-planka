@@ -29,6 +29,8 @@
     "configure_instance": "Configure {instance}",
     "save": "Save",
     "planka_fqdn": "planka hostname (FQDN)",
+    "admin_username": "Admin username",
+    "admin_password": "Admin password",
     "lets_encrypt": "Request LE Certificate",
     "http_to_https": "Force HTTPS",
     "enabled": "Enabled",

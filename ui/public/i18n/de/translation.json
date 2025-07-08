@@ -15,7 +15,9 @@
         "test_field": "Testfeld",
         "configure_instance": "{instance} konfigurieren",
         "save": "Speichern",
-        "title": "Einstellungen"
+        "title": "Einstellungen",
+        "admin_username": "Admin Benutzername",
+        "admin_password": "Admin Passwort"
     },
     "common": {
         "required": "erforderlich",
