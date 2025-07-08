@@ -24,22 +24,28 @@ config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 
 # Dump the configuration to stdout
 # json.dump(config, fp=sys.stdout)
-if os.path.exists("planka.env"): 
-	data = agent.read_envfile("planka.env") 
-	config["BASE_URL"] = data.get("BASE_URL", "http://localhost:3000") 
-	config["DATABASE_URL"] = data.get("DATABASE_URL", "postgresql://postgres@postgres/planka") 
-	config["SECRET_KEY"] = data.get("SECRET_KEY", "notsecretkey") 
-else: 
-	config["BASE_URL"] = "http://localhost:3000" 
-	config["DATABASE_URL"] = "postgresql://postgres@postgres/planka" 
-	config["SECRET_KEY"] = "notsecretkey" 
- 
-if os.path.exists("postgres.env"): 
-	data = agent.read_envfile("postgres.env") 
-	config["POSTGRES_DB"] = data.get("POSTGRES_DB", "planka") 
-	config["POSTGRES_HOST_AUTH_METHOD"] = data.get("POSTGRES_HOST_AUTH_METHOD", "trust") 
-else: 
-	config["POSTGRES_DB"] = "planka" 
-	config["POSTGRES_HOST_AUTH_METHOD"] = "trust" 
- 
+if os.path.exists("planka.env"):
+        data = agent.read_envfile("planka.env")
+        config["DATABASE_URL"] = data.get("DATABASE_URL", "postgresql://postgres@postgres-app/planka")
+        config["DEFAULT_ADMIN_EMAIL"] = data.get("DEFAULT_ADMIN_EMAIL", "admin@local")
+        config["DEFAULT_ADMIN_PASSWORD"] = data.get("DEFAULT_ADMIN_PASSWORD", "Nethesis,1234")
+        config["DEFAULT_ADMIN_NAME"] = data.get("DEFAULT_ADMIN_NAME", "Planka Admin")
+        config["DEFAULT_ADMIN_USERNAME"] = data.get("DEFAULT_ADMIN_USERNAME", "admin")
+        config["TRUST_PROXY"] = data.get("TRUST_PROXY", "true")
+else:
+     	config["DATABASE_URL"] = "postgresql://postgres@postgres/planka"
+        config["DEFAULT_ADMIN_EMAIL"] = "admin@local"
+        config["DEFAULT_ADMIN_PASSWORD"] = "Nethesis,1234"
+        config["DEFAULT_ADMIN_NAME"] = "Planka Admin"
+        config["DEFAULT_ADMIN_USERNAME"] = "admin"
+        config["TRUST_PROXY"] = "true"
+
+if os.path.exists("postgres.env"):
+        data = agent.read_envfile("postgres.env")
+        config["POSTGRES_DB"] = data.get("POSTGRES_DB", "planka")
+        config["POSTGRES_HOST_AUTH_METHOD"] = data.get("POSTGRES_HOST_AUTH_METHOD", "trust")
+else:
+     	config["POSTGRES_DB"] = "planka"
+        config["POSTGRES_HOST_AUTH_METHOD"] = "trust"
+
 json.dump(config, fp=sys.stdout)

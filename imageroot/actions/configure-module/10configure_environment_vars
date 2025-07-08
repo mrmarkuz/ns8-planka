@@ -15,20 +15,27 @@ data = json.load(sys.stdin)
 
 #This is specific to you module, so you need to change it accordingly.
 #agent.dump_env()
-#SECRET_KEY = data.get("SECRET_KEY", "notsecretkey") 
-BASE_URL = data.get("BASE_URL", "http://localhost:3000") 
-DATABASE_URL = data.get("DATABASE_URL", "postgresql://postgres@postgres/planka") 
- 
-planka = {  
- "BASE_URL" : BASE_URL ,
+DATABASE_URL = data.get("DATABASE_URL", "postgresql://postgres@postgres-app/planka")
+DEFAULT_ADMIN_EMAIL = data.get("DEFAULT_ADMIN_EMAIL", "admin@local")
+DEFAULT_ADMIN_PASSWORD = data.get("DEFAULT_ADMIN_PASSWORD", "Nethesis,1234")
+DEFAULT_ADMIN_NAME = data.get("DEFAULT_ADMIN_NAME", "Planka Admin")
+DEFAULT_ADMIN_USERNAME = data.get("DEFAULT_ADMIN_USERNAME", "admin")
+TRUST_PROXY = data.get("TRUST_PROXY", "true")
+
+planka = {
  "DATABASE_URL" : DATABASE_URL ,
-} 
-agent.write_envfile("planka.env", planka) 
-POSTGRES_DB = data.get("POSTGRES_DB", "planka") 
-POSTGRES_HOST_AUTH_METHOD = data.get("POSTGRES_HOST_AUTH_METHOD", "trust") 
- 
-postgres = { 
+ "DEFAULT_ADMIN_EMAIL" : DEFAULT_ADMIN_EMAIL ,
+ "DEFAULT_ADMIN_PASSWORD" : DEFAULT_ADMIN_PASSWORD ,
+ "DEFAULT_ADMIN_NAME" : DEFAULT_ADMIN_NAME ,
+ "DEFAULT_ADMIN_USERNAME" : DEFAULT_ADMIN_USERNAME ,
+ "TRUST_PROXY" : TRUST_PROXY ,
+}
+agent.write_envfile("planka.env", planka)
+POSTGRES_DB = data.get("POSTGRES_DB", "planka")
+POSTGRES_HOST_AUTH_METHOD = data.get("POSTGRES_HOST_AUTH_METHOD", "trust")
+
+postgres = {
  "POSTGRES_DB" : POSTGRES_DB ,
  "POSTGRES_HOST_AUTH_METHOD" : POSTGRES_HOST_AUTH_METHOD ,
-} 
-agent.write_envfile("postgres.env", postgres) 
+}
+agent.write_envfile("postgres.env", postgres)
