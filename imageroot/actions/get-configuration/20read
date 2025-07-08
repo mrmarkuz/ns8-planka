@@ -25,7 +25,7 @@ config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 # Dump the configuration to stdout
 # json.dump(config, fp=sys.stdout)
 if os.path.exists("planka.env"):
-        data = agent.read_envfile("planka.env")
+		data = agent.read_envfile("planka.env")
 		config["DATABASE_URL"] = data.get("DATABASE_URL", "postgresql://postgres@postgres-app/planka")
 		config["DEFAULT_ADMIN_EMAIL"] = data.get("DEFAULT_ADMIN_EMAIL", "admin@local")
 		config["DEFAULT_ADMIN_PASSWORD"] = data.get("DEFAULT_ADMIN_PASSWORD", "Nethesis,1234")
