@@ -7,15 +7,5 @@
 
 set -e
 
-if ! systemctl --user -q is-active planka.service; then
-    exit 0
-fi
-
-podman exec mariadb-app mysqldump \
-        --databases planka \
-        --default-character-set=utf8mb4 \
-        --skip-dump-date \
-        --ignore-table=mysql.event \
-        --single-transaction \
-        --quick \
-        --add-drop-table  > planka.sql
+echo "Dumping planka postgres database"
+podman exec postgres-app pg_dump -U postgres --format=c planka > planka.pg_dump
