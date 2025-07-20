@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "ignorePaths": ["**/ui/**", "**/.devcontainer/**"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/build-images.sh/"
+      ],
+      "matchStrings": [        
+        "ghcr\\.io/plankanban/planka:(?<currentValue>[-0-9\\.a-z]+)"
+      ],
+      "datasourceTemplate": "github",
+      "depNameTemplate": "plankaban/planka"
+    }
+  ]
+}
