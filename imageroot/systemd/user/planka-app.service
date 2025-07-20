@@ -26,8 +26,12 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/planka-app.pid  --cidfile %t/p
   --volume background-images:/app/public/background-images:Z \
   --volume attachments:/app/private/attachments:Z \
   --env BASE_URL=https://${TRAEFIK_HOST} \
-  --env-file planka.env \
-  --env-file secret.env \
+  --env DATABASE_URL=postgresql://postgres@postgres-app/planka \
+  --env DEFAULT_ADMIN_EMAIL=admin@local \
+  --env DEFAULT_ADMIN_PASSWORD=${DEFAULT_ADMIN_PASSWORD} \
+  --env DEFAULT_ADMIN_NAME='Planka Administrator' \
+  --env DEFAULT_ADMIN_USERNAME=${DEFAULT_ADMIN_USERNAME} \
+  --env TRUST_PROXY=True \
    ${PLANKA_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/planka-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP planka-app
