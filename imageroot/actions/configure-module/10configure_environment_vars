@@ -13,6 +13,9 @@ import agent
 # If parsing fails, output everything to stderr
 data = json.load(sys.stdin)
 
+if data.get("password","") == "":
+  exit(0)
+
 #agent.set_env("DEFAULT_ADMIN_EMAIL",data.get("DEFAULT_ADMIN_EMAIL", "admin@local"))
 agent.set_env("DEFAULT_ADMIN_PASSWORD",data.get("password", ""))
 #agent.set_env("DEFAULT_ADMIN_NAME",data.get("DEFAULT_ADMIN_NAME", "Planka Admin"))
