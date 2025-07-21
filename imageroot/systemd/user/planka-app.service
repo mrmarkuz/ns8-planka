@@ -18,7 +18,7 @@ TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p tmp
 ExecStartPre=/bin/rm -f %t/planka-app.pid %t/planka-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
-ExecStartPre=/bin/sh -c 'touch secret.env && grep -q SECRET_KEY secret.env || echo "SECRET_KEY=`openssl rand -hex 64`" >> secret.env'
+ExecStartPre=/bin/sh -c 'grep -q SECRET_KEY environment || echo "SECRET_KEY=`openssl rand -hex 64`" >> environment'
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/planka-app.pid  --cidfile %t/planka-app.ctr-id \
   --cgroups=no-conmon  --pod-id-file %t/planka.pod-id --replace -d --name  planka-app \
   --volume favicons:/app/public/favicons:Z \
