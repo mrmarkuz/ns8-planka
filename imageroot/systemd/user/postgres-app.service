@@ -18,7 +18,8 @@ TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p tmp
 ExecStartPre=/bin/rm -f %t/postgres-app.pid %t/postgres-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
-ExecStart=/usr/bin/podman run --conmon-pidfile %t/postgres-app.pid  --cidfile %t/postgres-app.ctr-id --cgroups=no-conmon  --pod-id-file %t/planka.pod-id --replace -d --name  postgres-app  --volume db-data:/var/lib/postgresql/data \
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/postgres-app.pid  --cidfile %t/postgres-app.ctr-id --cgroups=no-conmon  --pod-id-file %t/planka.pod-id --replace -d --name  postgres-app \
+   --volume postgres-data:/var/lib/postgresql/data \
    --env POSTGRES_DB=planka \
    --env POSTGRES_HOST_AUTH_METHOD=trust \
 ${POSTGRES_IMAGE}
