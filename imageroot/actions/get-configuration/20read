@@ -14,14 +14,10 @@ import sys
 import json
 import agent
 
-# Prepare return variable
-config = {}
-
-# Read current configuration from the environment file
-config["host"] = os.getenv("TRAEFIK_HOST","")
-config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
-config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
-config["username"] = os.getenv("DEFAULT_ADMIN_USERNAME","")
-config["password"] = os.getenv("DEFAULT_ADMIN_PASSWORD","")
+try:
+    with open('config.json', 'r') as cf:
+        config = json.loads(cf.read())
+except:
+    config = {"lets_encrypt": False, "http2https": False}
 
 json.dump(config, fp=sys.stdout)

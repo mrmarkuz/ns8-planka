@@ -16,7 +16,15 @@ data = json.load(sys.stdin)
 if data.get("password","") == "":
   exit(0)
 
-#agent.set_env("DEFAULT_ADMIN_EMAIL",data.get("DEFAULT_ADMIN_EMAIL", "admin@local"))
-agent.set_env("DEFAULT_ADMIN_PASSWORD",data.get("password", ""))
-#agent.set_env("DEFAULT_ADMIN_NAME",data.get("DEFAULT_ADMIN_NAME", "Planka Admin"))
-agent.set_env("DEFAULT_ADMIN_USERNAME",data.get("username", ""))
+username = data.get("username","")
+password = data.get("password","")
+
+config = {
+  "DEFAULT_ADMIN_USERNAME": username,
+  "DEFAULT_ADMIN_PASSWORD": password
+}
+agent.write_envfile('config.env', config)
+
+# For later use and backup
+with open('config.json', 'w') as cfp:
+  cfp.write(json.dumps(data))

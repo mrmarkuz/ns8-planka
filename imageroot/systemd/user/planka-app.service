@@ -15,22 +15,23 @@ EnvironmentFile=-%S/state/smarthost.env
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/mkdir -p tmp
 ExecStartPre=/bin/rm -f %t/planka-app.pid %t/planka-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
-ExecStartPre=/bin/sh -c 'grep -q SECRET_KEY environment || echo "SECRET_KEY=`openssl rand -hex 64`" >> environment'
+ExecStartPre=/bin/sh -c 'grep -q SECRET_KEY secret.env || echo "SECRET_KEY=`openssl rand -hex 64`" >> secret.env'
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/planka-app.pid  --cidfile %t/planka-app.ctr-id \
   --cgroups=no-conmon  --pod-id-file %t/planka.pod-id --replace -d --name  planka-app \
   --volume favicons:/app/public/favicons:Z \
   --volume user-avatars:/app/public/user-avatars:Z \
   --volume background-images:/app/public/background-images:Z \
   --volume attachments:/app/private/attachments:Z \
+  --env-file=%S/state/config.env \
+  --env-file=%S/state/secret.env \
   --env BASE_URL=https://${TRAEFIK_HOST} \
   --env DATABASE_URL=postgresql://postgres@postgres-app/planka \
   --env DEFAULT_ADMIN_EMAIL=admin@local \
-  --env DEFAULT_ADMIN_PASSWORD=${DEFAULT_ADMIN_PASSWORD} \
+#  --env DEFAULT_ADMIN_PASSWORD=${DEFAULT_ADMIN_PASSWORD} \
   --env DEFAULT_ADMIN_NAME='Planka Administrator' \
-  --env DEFAULT_ADMIN_USERNAME=${DEFAULT_ADMIN_USERNAME} \
+#  --env DEFAULT_ADMIN_USERNAME=${DEFAULT_ADMIN_USERNAME} \
   --env TRUST_PROXY=True \
    ${PLANKA_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/planka-app.ctr-id -t 10
