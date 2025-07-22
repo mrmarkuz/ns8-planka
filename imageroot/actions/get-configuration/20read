@@ -18,6 +18,6 @@ try:
     with open('config.json', 'r') as cf:
         config = json.loads(cf.read())
 except:
-    config = {"lets_encrypt": False, "http2https": False}
+    config = {"host": "", "lets_encrypt": False, "http2https": False}
 
 json.dump(config, fp=sys.stdout)
