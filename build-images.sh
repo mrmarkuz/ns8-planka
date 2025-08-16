@@ -44,7 +44,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-    --label="org.nethserver.images=ghcr.io/plankanban/planka:2.0.0-rc.3 docker.io/postgres:16-alpine" \
+    --label="org.nethserver.images=ghcr.io/plankanban/planka:2.0.0-rc.3 docker.io/postgres:17-alpine" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
