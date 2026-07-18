@@ -19,6 +19,13 @@ if data.get("password","") == "":
 username = data.get("username","")
 password = data.get("password","")
 
+# Setup default values
+host = data.get("host")
+h2hs = data.get("http2https", True)
+
+agent.set_env("TRAEFIK_HOST", host)
+agent.set_env("TRAEFIK_HTTP2HTTPS", h2hs)
+
 config = {
   "DEFAULT_ADMIN_USERNAME": username,
   "DEFAULT_ADMIN_PASSWORD": password

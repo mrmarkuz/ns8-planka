@@ -17,6 +17,7 @@ import agent
 try:
     with open('config.json', 'r') as cf:
         config = json.loads(cf.read())
+        config["lets_encrypt"] = agent.get_route(os.environ['MODULE_ID']).get('lets_encrypt', False)
 except:
     config = {"host": "", "lets_encrypt": False, "http2https": False}
 
