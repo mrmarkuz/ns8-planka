@@ -10,9 +10,9 @@ After=planka.service postgres-app.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
-EnvironmentFile=%S/state/environment
-EnvironmentFile=-%S/state/smarthost.env
-WorkingDirectory=%S/state
+EnvironmentFile=%E/state/environment
+EnvironmentFile=-%E/state/smarthost.env
+WorkingDirectory=%E/state
 Restart=always
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/planka-app.pid %t/planka-app.ctr-id
@@ -24,8 +24,8 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/planka-app.pid  --cidfile %t/p
   --volume user-avatars:/app/public/user-avatars:Z \
   --volume background-images:/app/public/background-images:Z \
   --volume attachments:/app/private/attachments:Z \
-  --env-file=%S/state/config.env \
-  --env-file=%S/state/secret.env \
+  --env-file=%E/state/config.env \
+  --env-file=%E/state/secret.env \
   --env BASE_URL=https://${TRAEFIK_HOST} \
   --env DATABASE_URL=postgresql://postgres@postgres-app/planka \
   --env DEFAULT_ADMIN_EMAIL=admin@local \
