@@ -1,8 +1,11 @@
 {
   "name": "planka",
   "description": {
-    "en": "Elegant open source project tracking",
-    "de": "Elegantes Open Source Projektmanagement"
+    "en": "PLANKA is a modern Kanban tool for teams who want their work visible and organised",
+    "de": "PLANKA ist ein modernes Kanban-Tool für Teams, die ihre Arbeit sichtbar und organisiert gestalten möchten",
+    "fr": "PLANKA est un outil Kanban moderne destiné aux équipes qui souhaitent rendre leur travail visible et organisé",
+    "it": "PLANKA è un moderno strumento Kanban pensato per i team che desiderano rendere il proprio lavoro visibile e organizzato",
+    "es": "PLANKA es una herramienta Kanban moderna para equipos que desean que su trabajo sea visible y esté organizado"
   },
   "categories": ["collaboration"],
   "authors": [
