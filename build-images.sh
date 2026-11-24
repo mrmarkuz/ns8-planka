@@ -21,7 +21,7 @@ container=$(buildah from scratch)
 # Reuse existing nodebuilder-planka container, to speed up builds
 if ! buildah containers --format "{{.ContainerName}}" | grep -q nodebuilder-planka; then
     echo "Pulling NodeJS runtime..."
-    buildah from --name nodebuilder-planka -v "${PWD}:/usr/src:Z" docker.io/library/node:24.22.3
+    buildah from --name nodebuilder-planka -v "${PWD}:/usr/src:Z" docker.io/library/node:26.13.0
 fi
 
 echo "Build static UI files with node..."
