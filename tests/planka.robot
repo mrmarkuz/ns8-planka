@@ -45,7 +45,7 @@ Check if planka can be configured
     Should Be Equal As Integers    ${rc}  0
 
 Check if planka works as expected
-    ${rc} =    Execute Command    sleep 60 && curl -H "Host: planka.domain.test" -fkL https://127.0.0.1/
+    ${rc} =    Execute Command    sleep 20 && curl -H "Host: planka.domain.test" -fkL https://127.0.0.1/
     ...    return_rc=True  return_stdout=False
     Should Be Equal As Integers    ${rc}  0
 
