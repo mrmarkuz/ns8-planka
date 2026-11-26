@@ -14,14 +14,17 @@ images=()
 repobase="${REPOBASE:-ghcr.io/mrmarkuz}"
 # Configure the image name
 reponame="planka"
-
+# Node.js 25+ no longer ships Corepack, install it from npm
+# renovate: datasource=npm packageName=corepack
+corepack_version=0.36.0
 # Create a new empty container image
 container=$(buildah from scratch)
 
 # Reuse existing nodebuilder-planka container, to speed up builds
 if ! buildah containers --format "{{.ContainerName}}" | grep -q nodebuilder-planka; then
     echo "Pulling NodeJS runtime..."
-    buildah from --name nodebuilder-planka -v "${PWD}:/usr/src:Z" docker.io/library/node:24.22.3
+    buildah from --name nodebuilder-planka -v "${PWD}:/usr/src:Z" docker.io/library/node:26.13.1-slim
+    buildah run nodebuilder-planka sh -c "npm install -g corepack@${corepack_version} && corepack enable"
 fi
 
 echo "Build static UI files with node..."
@@ -44,7 +47,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-	--label="org.nethserver.min-core=3.12.4-0" \
+	--label="org.nethserver.min-core=3.20.1" \
     --label="org.nethserver.images=ghcr.io/plankanban/planka:2.3.1 docker.io/postgres:16.15-alpine" \
     "${container}"
 # Commit the image
